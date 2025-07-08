@@ -2717,7 +2717,7 @@ body {
 
 .abs-img {
   justify-content: center;
-  align-items: center;
+  align-items: normal;
   height: 88%;
   display: flex;
   position: absolute;
