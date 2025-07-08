@@ -2470,6 +2470,7 @@ body {
   transition: transform .3s cubic-bezier(.25, .8, .25, 1),
   box-shadow .3s ease;
   will-change: transform, box-shadow;
+  position: relative;
 }
 
 .text-example-container {
@@ -2490,9 +2491,10 @@ body {
 }
 
 /* 투명 클릭 레이어 */
-.text-example-container .yt-hitarea {
+.yt-hitarea {
   position: absolute;
   inset: 0;
+  z-index: 10;
   cursor: pointer;
 }
 

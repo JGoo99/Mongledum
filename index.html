@@ -264,7 +264,8 @@
             addEventListener("GSAPReady", (event) => {
               const {lenis} = event.detail;
 
-              const wrapper = document.querySelector("[data-animate='sectionselector']");
+              const wrapper = document.querySelector(
+                "[data-animate='sectionselector']");
               const items = [...wrapper.children];
               const highlight = wrapper.querySelector("[data-selector='highlight']");
               let currentIndex = 0;
@@ -388,7 +389,8 @@
           </label>
         </div>
         <div class="comp">
-          <div data-hero="par" class="par-base _w-ch">안녕하세요. 몽글덤을 소개해야하는디요.<br/>뭐라고 하면 좋을까요?
+          <div data-hero="par" class="par-base _w-ch">안녕하세요. 몽글덤을 소개해야하는디요.<br/>뭐라고 하면
+            좋을까요?
           </div>
           <div data-hero="alpha" class="hero-btn-w">
             <a data-module="btn" href="https://www.instagram.com/mongledum_official/"
@@ -476,9 +478,11 @@
             function setupHeroAnimations() {
               const split = (text, type = "chars") => {
                 const elements = Array.isArray(text) ? text : [text];
-                elements.forEach((el) => el?.setAttribute?.("aria-label", el.textContent));
-                const splits = new SplitText(text, { type });
-                splits[type].forEach((char) => char?.setAttribute?.("aria-hidden", "true"));
+                elements.forEach(
+                  (el) => el?.setAttribute?.("aria-label", el.textContent));
+                const splits = new SplitText(text, {type});
+                splits[type].forEach(
+                  (char) => char?.setAttribute?.("aria-hidden", "true"));
                 return splits[type];
               };
 
@@ -504,7 +508,7 @@
                   duration: 0.5,
                   delay,
                   ease: "expo.out",
-                  stagger: { each: 0.01, from: "end" },
+                  stagger: {each: 0.01, from: "end"},
                 });
 
                 await gsap.to(dumSplit, {
@@ -512,10 +516,12 @@
                   duration: 0.5,
                   delay: 0.4,
                   ease: "expo.out",
-                  stagger: { each: 0.01, from: "end" },
+                  stagger: {each: 0.01, from: "end"},
                 });
 
-                if (scribble) await animateScribble(scribble);
+                if (scribble) {
+                  await animateScribble(scribble);
+                }
               };
 
               const animateOut = async () => {
@@ -535,7 +541,7 @@
                   duration: 0.8,
                   ease: "expo.out",
                   delay: 0.1,
-                  stagger: { each: 0.01, from: "center" },
+                  stagger: {each: 0.01, from: "center"},
                 });
 
                 gsap.to(dumSplit, {
@@ -543,7 +549,7 @@
                   duration: 0.8,
                   ease: "expo.out",
                   delay: 0.1,
-                  stagger: { each: 0.01, from: "center" },
+                  stagger: {each: 0.01, from: "center"},
                 });
               };
 
@@ -556,27 +562,34 @@
               };
 
               const animateScribble = (scribble) => {
-                if (isScribbling) return;
+                if (isScribbling) {
+                  return;
+                }
                 isScribbling = true;
 
-                gsap.set(scribble, { autoAlpha: 0, rotation: 0 });
+                gsap.set(scribble, {autoAlpha: 0, rotation: 0});
                 const tl = gsap.timeline();
                 const items = [...scribble].reverse();
 
                 items.forEach((item, index) => {
-                  const rotation = Math.random() * SCRIBBLE_CONFIG.ROTATION_RANGE - SCRIBBLE_CONFIG.ROTATION_RANGE / 2;
+                  const rotation = Math.random() * SCRIBBLE_CONFIG.ROTATION_RANGE
+                    - SCRIBBLE_CONFIG.ROTATION_RANGE / 2;
                   const delay = index * SCRIBBLE_CONFIG.TIME_BETWEEN_SCRIBBLES;
 
-                  tl.set(item, { autoAlpha: 1, rotation }, delay)
-                  .set(item, { autoAlpha: 0 }, delay + SCRIBBLE_CONFIG.VISIBILITY_DURATION);
+                  tl.set(item, {autoAlpha: 1, rotation}, delay)
+                  .set(item, {autoAlpha: 0},
+                    delay + SCRIBBLE_CONFIG.VISIBILITY_DURATION);
                 });
 
-                tl.call(() => { isScribbling = false; });
+                tl.call(() => {
+                  isScribbling = false;
+                });
               };
 
               let heroStripes, stripes, stripesAnimation = null;
 
-              const calcX = (i) => (i % 2 === 0 ? -heroStripes[i].scrollWidth : heroStripes[i].scrollWidth);
+              const calcX = (i) => (i % 2 === 0 ? -heroStripes[i].scrollWidth
+                : heroStripes[i].scrollWidth);
 
               const animateStripesIn = () => {
                 stripesAnimation?.kill();
@@ -613,14 +626,17 @@
 
               // ✅ 여기서부터 바로 실행됨
               const wrapper = document.querySelector("[data-module='hero']");
-              if (!wrapper) return;
+              if (!wrapper) {
+                return;
+              }
 
               const layer = wrapper.querySelector("[data-hero='layer']");
               const title = wrapper.querySelector("[data-hero='title']");
               const toggle = wrapper.querySelector("[data-hero='toggle']");
               const alpha = document.querySelectorAll("[data-hero='alpha']");
               const par = document.querySelectorAll("[data-hero='par']");
-              const scribble = [...document.querySelector("[data-hero='scribble']").children[0].children];
+              const scribble = [...document.querySelector(
+                "[data-hero='scribble']").children[0].children];
 
               mongleSplit = split(title.children[0], "chars");
               dumSplit = split(title.children[1], "chars");
@@ -628,7 +644,7 @@
               stripes = [...layer.children];
               heroStripes = stripes.map((item) => item.children[0]);
 
-              gsap.set(heroStripes, { autoAlpha: 0 });
+              gsap.set(heroStripes, {autoAlpha: 0});
               gsap.to(layer, {
                 yPercent: 10,
                 scrollTrigger: {
@@ -639,13 +655,13 @@
                 },
               });
 
-              gsap.set(mongleSplit.flat(), { yPercent: 110 });
-              gsap.set(dumSplit.flat(), { yPercent: -110 });
-              gsap.set(layer, { autoAlpha: 1 });
-              gsap.set(toggle, { scale: 3, rotation: 360 });
-              gsap.set(parSplit, { autoAlpha: 0, yPercent: 100 });
-              gsap.set(alpha, { autoAlpha: 0, scale: 0.7 });
-              gsap.set(scribble, { autoAlpha: 0 });
+              gsap.set(mongleSplit.flat(), {yPercent: 110});
+              gsap.set(dumSplit.flat(), {yPercent: -110});
+              gsap.set(layer, {autoAlpha: 1});
+              gsap.set(toggle, {scale: 3, rotation: 360});
+              gsap.set(parSplit, {autoAlpha: 0, yPercent: 100});
+              gsap.set(alpha, {autoAlpha: 0, scale: 0.7});
+              gsap.set(scribble, {autoAlpha: 0});
 
               gsap.to(toggle, {
                 scale: 1,
@@ -671,12 +687,15 @@
               });
 
               toggle.onmouseenter = () => {
-                if (!isIn) return;
+                if (!isIn) {
+                  return;
+                }
                 animateScribble(scribble);
               };
 
               function buttons() {
-                const buttons = [...document.querySelectorAll("[data-module='btn']")];
+                const buttons = [...document.querySelectorAll(
+                  "[data-module='btn']")];
 
                 buttons.forEach((btn) => {
                   const overflow = btn.children[0];
@@ -694,13 +713,13 @@
                   };
 
                   btn.onmouseenter = () => {
-                    gsap.to(splitText1, { ...animation, yPercent: -100 });
-                    gsap.to(splitText2, { ...animation, yPercent: -100 });
+                    gsap.to(splitText1, {...animation, yPercent: -100});
+                    gsap.to(splitText2, {...animation, yPercent: -100});
                   };
 
                   btn.onmouseleave = () => {
-                    gsap.to(splitText1, { ...animation, yPercent: 0 });
-                    gsap.to(splitText2, { ...animation, yPercent: 0 });
+                    gsap.to(splitText1, {...animation, yPercent: 0});
+                    gsap.to(splitText2, {...animation, yPercent: 0});
                   };
                 });
               }
@@ -823,7 +842,8 @@
                   alt="" class="img-sky"/>
 
                 <!-- 단체 사진 PNG -->
-                <img src="./img/about-all.png" class="img-group" alt="mongledum main photo"/>
+                <img src="./img/about-all.png" class="img-group"
+                     alt="mongledum main photo"/>
 
                 <!-- 텍스트 -->
                 <div class="video-text">
@@ -867,9 +887,9 @@
                       scrollTrigger: {
                         trigger: section,
                         start: "top center",
-                        end: "bottom bottom+=100%",
+                        end: "bottom top",
                         invalidateOnRefresh: true,
-                        scrub: 1,
+                        scrub: 0.5,
                       },
                     });
 
@@ -901,12 +921,10 @@
 
                     tl.fromTo(video, {
                       scale: 0.5,
-                      // rotation: 180,
                     }, {
                       ease: "back.inOut(.2)",
                       scale: 1,
                       duration: 0.8,
-                      // rotation: 0,
                     }, "<");
 
                     tl.fromTo(img, {
@@ -919,17 +937,17 @@
                       yPercent: 0,
                     }, "<");
 
+                    tl.to(video, {
+                      scale: 0.9,
+                      ease: "linear",
+                    });
+
                     tl.to(text, {
                       opacity: 1,
                       y: 0,
                       duration: 1,
                       ease: "expo.out",
                     }, "<");
-
-                    tl.to(video, {
-                      scale: 0.9,
-                      ease: "linear",
-                    });
 
                     tl.to(img, {
                       scale: 1,
@@ -947,7 +965,6 @@
                       filter: "brightness(0.9)",
                       duration: 1,
                     });
-
                   }
                 );
               </script>
@@ -1128,7 +1145,8 @@
 
                 addEventListener("GSAPReady", (event) => {
                     // console.log("inertia");
-                    const wrapper = document.querySelector("[data-animate='inertia']");
+                    const wrapper = document.querySelector(
+                      "[data-animate='inertia']");
                     const items = [...wrapper.querySelector(
                       "[data-inertia='item']").children];
 
@@ -1154,7 +1172,8 @@
                     });
 
                     // Set up the container for the rotating items
-                    const container = wrapper.querySelector("[data-inertia='item']");
+                    const container = wrapper.querySelector(
+                      "[data-inertia='item']");
                     gsap.set(container, {
                       transformStyle: "preserve-3d",
                     });
@@ -1497,7 +1516,8 @@
                 config = config || {};
                 gsap.context(() => {
                     // use a context so that if this is called from within another context or a gsap.matchMedia(), we can perform proper cleanup like the "resize" event handler on the window
-                    let onChange = config.onChange, lastIndex = 0, tl = gsap.timeline({
+                    let onChange = config.onChange, lastIndex = 0,
+                      tl = gsap.timeline({
                         repeat: config.repeat,
                         onUpdate: onChange && function () {
                           let i = tl.closestIndex();
@@ -1513,7 +1533,8 @@
                         },
                         onReverseComplete: () => tl.totalTime(
                           tl.rawTime() + tl.duration() * 100),
-                      }), length = items.length, startX = items[0].offsetLeft, times = [],
+                      }), length = items.length, startX = items[0].offsetLeft,
+                      times = [],
                       widths = [], spaceBefore = [], xPercents = [], curIndex = 0,
                       indexIsDirty = false, center = config.center,
                       pixelsPerSecond = (config.speed || 1) * 100,
@@ -1522,10 +1543,13 @@
                       timeOffset = 0,
                       container = center === true ? items[0].parentNode
                         : gsap.utils.toArray(center)[0] || items[0].parentNode,
-                      totalWidth, getTotalWidth = () => items[length - 1].offsetLeft
-                        + (xPercents[length - 1] / 100) * widths[length - 1] - startX
+                      totalWidth,
+                      getTotalWidth = () => items[length - 1].offsetLeft
+                        + (xPercents[length - 1] / 100) * widths[length - 1]
+                        - startX
                         + spaceBefore[0] + items[length - 1].offsetWidth
-                        * gsap.getProperty(items[length - 1], "scaleX") + (parseFloat(
+                        * gsap.getProperty(items[length - 1], "scaleX")
+                        + (parseFloat(
                           config.paddingRight) || 0), populateWidths = () => {
                         let b1 = container.getBoundingClientRect(), b2;
 
@@ -1565,11 +1589,13 @@
                         totalWidth = getTotalWidth();
                       }
                       , timeWrap, populateOffsets = () => {
-                        timeOffset = center ? (tl.duration() * (container.offsetWidth
-                          / 2)) / totalWidth : 0;
+                        timeOffset = center ? (tl.duration()
+                          * (container.offsetWidth
+                            / 2)) / totalWidth : 0;
                         center && times.forEach((t, i) => {
                             times[i] = timeWrap(
-                              tl.labels["label" + i] + (tl.duration() * widths[i]) / 2
+                              tl.labels["label" + i] + (tl.duration() * widths[i])
+                              / 2
                               / totalWidth - timeOffset);
                           }
                         );
@@ -1604,11 +1630,13 @@
                             duration: distanceToLoop / pixelsPerSecond,
                           }, 0).fromTo(item, {
                             xPercent: snap(
-                              ((curX - distanceToLoop + totalWidth) / widths[i])
+                              ((curX - distanceToLoop + totalWidth)
+                                / widths[i])
                               * 100),
                           }, {
                             xPercent: xPercents[i],
-                            duration: (curX - distanceToLoop + totalWidth - curX)
+                            duration: (curX - distanceToLoop + totalWidth
+                                - curX)
                               / pixelsPerSecond,
                             immediateRender: false,
                           }, distanceToLoop / pixelsPerSecond).add("label" + i,
@@ -1734,13 +1762,15 @@
                         inertia: true,
                         snap(value) {
                           //note: if the user presses and releases in the middle of a throw, due to the sudden correction of proxy.x in the onPressInit(), the velocity could be very large, throwing off the snap. So sense that condition and adjust for it. We also need to set overshootTolerance to 0 to prevent the inertia from causing it to shoot past and come back
-                          if (Math.abs(startProgress / -ratio - this.x) < 10) {
+                          if (Math.abs(startProgress / -ratio - this.x)
+                            < 10) {
                             return lastSnap + initChangeX;
                           }
                           let time = -(value * ratio) * tl.duration()
                             , wrappedTime = timeWrap(time)
-                            , snapTime = times[getClosest(times, wrappedTime,
-                            tl.duration())]
+                            ,
+                            snapTime = times[getClosest(times, wrappedTime,
+                              tl.duration())]
                             , dif = snapTime - wrappedTime;
                           Math.abs(dif) > tl.duration() / 2 && (dif += dif < 0
                             ? tl.duration() : -tl.duration());
@@ -1771,36 +1801,42 @@
               }
 
               /* -- Global Params --------------------------------------------------------- */
-              const sliderParams = { duration: 0.5, ease: "power2.out" };
+              const sliderParams = {duration: 0.5, ease: "power2.out"};
 
               /* --------------------------------------------------------------------------
-                 2) Slider 초기화
-                 -------------------------------------------------------------------------- */
+   2) Slider 초기화
+   -------------------------------------------------------------------------- */
               addEventListener("GSAPReady", () => {
 
                 /* ── 기본 요소 캐싱 ── */
-                const wrapper   = document.querySelector("[data-animate='slider']");
+                const wrapper = document.querySelector("[data-animate='slider']");
                 const slideList = wrapper.querySelector("[data-slider='slides']");
-                const slides    = [...slideList.children];
+                const slides = [...slideList.children];
 
                 /* currentIndex를 마크업 기준으로 계산 */
-                let currentIndex = slides.findIndex(li => li.classList.contains("current"));
-                if (currentIndex === -1) currentIndex = 0;
+                let currentIndex = slides.findIndex(
+                  li => li.classList.contains("current"));
+                if (currentIndex === -1) {
+                  currentIndex = 0;
+                }
 
                 /* UI 요소 */
                 const progress = wrapper.querySelector("[data-slider='progress']");
-                const nextBtn  = wrapper.querySelector("[data-slider='next']");
-                const prevBtn  = wrapper.querySelector("[data-slider='prev']");
+                const nextBtn = wrapper.querySelector("[data-slider='next']");
+                const prevBtn = wrapper.querySelector("[data-slider='prev']");
 
                 /* ── 도트(dot) 동적 생성 ── */
                 const dotsWrap = wrapper.querySelector("[data-slider='dots']");
                 dotsWrap.innerHTML = "";
                 slides.forEach((_, i) => {
-                  const li  = document.createElement("li");
+                  const li = document.createElement("li");
                   const btn = document.createElement("button");
                   btn.className = "btn slider-dot";
-                  if (i === currentIndex) btn.classList.add("current");
-                  btn.addEventListener("click", () => loop.toIndex(i, sliderParams));
+                  if (i === currentIndex) {
+                    btn.classList.add("current");
+                  }
+                  btn.addEventListener("click",
+                    () => loop.toIndex(i, sliderParams));
                   li.appendChild(btn);
                   dotsWrap.appendChild(li);
                 });
@@ -1808,7 +1844,9 @@
 
                 /* ── 상태 동기화 함수 ── */
                 const updateCurrent = (idx) => {
-                  if (!dots[idx] || !slides[idx]) return;          // 범위 보호
+                  if (!dots[idx] || !slides[idx]) {
+                    return;
+                  }          // 범위 보호
                   dots[currentIndex]?.classList.remove("current");
                   slides[currentIndex]?.classList.remove("current");
 
@@ -1834,12 +1872,13 @@
                   });
                   updateCurrent(currentIndex); // 첫 로드시 UI 싱크
 
-                  loop.toIndex(currentIndex, { duration: 0 });
+                  loop.toIndex(currentIndex, {duration: 0});
                 }, 500);
 
                 /* 네비게이션 버튼 */
                 nextBtn.addEventListener("click", () => loop.next(sliderParams));
-                prevBtn.addEventListener("click", () => loop.previous(sliderParams));
+                prevBtn.addEventListener("click",
+                  () => loop.previous(sliderParams));
 
               });
             </script>
@@ -1848,84 +1887,84 @@
         <section id="text" class="sec">
           <ul role="list" class="comp text-exp w-list-unstyled">
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="chars"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".2" data-animate="text" data-type="side"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="updown"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="alpha"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="words"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
+              <div class="yt-hitarea" data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   aria-label="유튜브로 이동"></div>
               <div class="text-example-container"
-                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
                    style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="updown"
                      data-duration="1.2" class="text-effect-w">
                   <div class="text-effect-tx">Youtube</div>
                 </div>
-                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
                 <div>Dr. Funk</div>
@@ -2070,10 +2109,11 @@
                 }
 
                 /* --------------------------------------------------------------------
-                   3. Init – GSAPReady
-                -------------------------------------------------------------------- */
+   3. Init – GSAPReady
+-------------------------------------------------------------------- */
                 addEventListener("GSAPReady", () => {
-                  const texts = [...document.querySelectorAll('[data-animate="text"]')];
+                  const texts = [...document.querySelectorAll(
+                    '[data-animate="text"]')];
                   texts.forEach((item) => {
                     switch (item.dataset.type) {
                       case "words":
@@ -2099,13 +2139,11 @@
             </script>
             <script>
               document.addEventListener("DOMContentLoaded", () => {
-                document.querySelectorAll(".text-example-container").forEach(box => {
-                  const link = box.dataset.youtube;
-                  if (!link) return;
-
-                  // 안쪽 hitarea에 클릭 이벤트
-                  box.querySelector(".yt-hitarea").addEventListener("click", () => {
-                    window.open(link, "_blank", "noopener");
+                document.querySelectorAll(".yt-hitarea").forEach(hit => {
+                  const url = hit.dataset.youtube;
+                  if (!url) return;
+                  hit.addEventListener("click", () => {
+                    window.open(url, "_blank", "noopener");
                   });
                 });
               });
@@ -2152,7 +2190,8 @@
                     return;
                   }
 
-                  const sections = [...wrapper.querySelectorAll("[data-marquee='line']")];
+                  const sections = [...wrapper.querySelectorAll(
+                    "[data-marquee='line']")];
 
                   gsap.fromTo(sections, {
                     x: (i) => i % 2 === 0 ? sections[i].offsetWidth / 4
@@ -2183,10 +2222,12 @@
               </div>
               <div class="col-half items-r">
                 <div class="_w-social">
-                  <a href="https://www.instagram.com/mongledum_official/" target="_blank">
+                  <a href="https://www.instagram.com/mongledum_official/"
+                     target="_blank">
                     <img src="./img/instagram.png" alt="Instagram">
                   </a>
-                  <a href="https://www.youtube.com/@mongledum_official" target="_blank">
+                  <a href="https://www.youtube.com/@mongledum_official"
+                     target="_blank">
                     <img src="./img/youtube.png" alt="Youtube">
                   </a>
                   <a href="mailto:mongledum@gmail.com" target="_blank">
@@ -2205,7 +2246,8 @@
               <div class="col-half">
                 <ul role="list" class="sub-nav-w w-list-unstyled">
                   <li>
-                    <a href="#scrolltrigger" class="link-li-w footer w-inline-block">
+                    <a href="#scrolltrigger"
+                       class="link-li-w footer w-inline-block">
                       <div>About</div>
                     </a>
                   </li>
@@ -2282,7 +2324,8 @@
                         const tl = gsap.timeline();
 
                         paths.forEach((path, index) => {
-                            const baseDelay = index * FOOTER_ANIMATION_CONFIG.STAGGER;
+                            const baseDelay = index
+                              * FOOTER_ANIMATION_CONFIG.STAGGER;
                             const isLastPath = index === paths.length - 1;
 
                             // Flash animation
@@ -2390,7 +2433,8 @@
       resizeObserver.observe(document.body);
     }
 
-    const documentReady = document.readyState === "complete" || document.readyState === "interactive";
+    const documentReady = document.readyState === "complete" || document.readyState
+      === "interactive";
 
     if (documentReady) {
       initGsapGlobal();
@@ -2404,7 +2448,7 @@
   let gsapReady = false;
 
   function runPostSplashAnimations() {
-    gsap.set("[data-start='hidden']", { autoAlpha: 0 });
+    gsap.set("[data-start='hidden']", {autoAlpha: 0});
     gsap.to("[data-start='hidden']", {
       autoAlpha: 1,
       duration: 0.3,
