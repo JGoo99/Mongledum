@@ -8,6 +8,27 @@ body {
   margin: 0
 }
 
+body.loading {
+  overflow: hidden;
+}
+
+#preloader {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+}
+
+#main-content {
+  transition: opacity 0.4s ease;
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block
 }
@@ -2166,7 +2187,6 @@ body {
 
 .sec.footer {
   background-color: var(--primary);
-  padding-top: 7.25rem;
   padding-bottom: 0
 }
 
@@ -3024,7 +3044,8 @@ body {
 }
 
 ._w-ch {
-  max-width: 41ch;
+  max-width: 45ch;
+  line-height: 1.5rem;
 }
 
 @media (max-width: 600px) {
