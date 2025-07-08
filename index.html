@@ -1848,69 +1848,87 @@
         <section id="text" class="sec">
           <ul role="list" class="comp text-exp w-list-unstyled">
             <li class="text-g-item">
-              <div class="text-example-container">
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="chars"
                      data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">Split Chars</div>
+                  <div class="text-effect-tx">Youtube</div>
                 </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
-                <div>Character Split Reveal</div>
+                <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
-              <div class="text-example-container">
-                <div data-delay=".2" data-animate="text" data-type="words"
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
+                <div data-delay=".2" data-animate="text" data-type="side"
                      data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">Split By Words</div>
+                  <div class="text-effect-tx">Youtube</div>
                 </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
-                <div>Word Split Reveal</div>
+                <div>Dr. Funk</div>
               </div>
             </li>
             <li class="text-g-item">
-              <div class="text-example-container">
-                <div data-delay=".1" data-animate="text" data-type="scramble"
-                     data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">Scramble</div>
-                </div>
-              </div>
-              <div class="text-example-tx-w">
-                <div>Scramble Text Reveal</div>
-              </div>
-            </li>
-            <li class="text-g-item">
-              <div class="text-example-container">
-                <div data-delay=".1" data-animate="text" data-type="alpha"
-                     data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">Split Alpha</div>
-                </div>
-              </div>
-              <div class="text-example-tx-w">
-                <div>Alpha Reveal</div>
-              </div>
-            </li>
-            <li class="text-g-item">
-              <div class="text-example-container">
-                <div data-delay=".1" data-animate="text" data-type="side"
-                     data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">From the Side</div>
-                </div>
-              </div>
-              <div class="text-example-tx-w">
-                <div>SIide Char Reveal</div>
-              </div>
-            </li>
-            <li class="text-g-item">
-              <div class="text-example-container">
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
                 <div data-delay=".1" data-animate="text" data-type="updown"
                      data-duration="1.2" class="text-effect-w">
-                  <div class="text-effect-tx">Up and Down</div>
+                  <div class="text-effect-tx">Youtube</div>
                 </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
               </div>
               <div class="text-example-tx-w">
-                <div>Up and down Reveal</div>
+                <div>Dr. Funk</div>
+              </div>
+            </li>
+            <li class="text-g-item">
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
+                <div data-delay=".1" data-animate="text" data-type="alpha"
+                     data-duration="1.2" class="text-effect-w">
+                  <div class="text-effect-tx">Youtube</div>
+                </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
+              </div>
+              <div class="text-example-tx-w">
+                <div>Dr. Funk</div>
+              </div>
+            </li>
+            <li class="text-g-item">
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
+                <div data-delay=".1" data-animate="text" data-type="words"
+                     data-duration="1.2" class="text-effect-w">
+                  <div class="text-effect-tx">Youtube</div>
+                </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
+              </div>
+              <div class="text-example-tx-w">
+                <div>Dr. Funk</div>
+              </div>
+            </li>
+            <li class="text-g-item">
+              <div class="text-example-container"
+                   data-youtube="https://www.youtube.com/shorts/sluHfMW6FUM"
+                   style="background-image:url('./img/youtube-ex.jpg');">
+                <div data-delay=".1" data-animate="text" data-type="updown"
+                     data-duration="1.2" class="text-effect-w">
+                  <div class="text-effect-tx">Youtube</div>
+                </div>
+                <div class="yt-hitarea" aria-label="유튜브로 이동"></div>
+              </div>
+              <div class="text-example-tx-w">
+                <div>Dr. Funk</div>
               </div>
             </li>
           </ul>
@@ -1984,28 +2002,6 @@
                   );
                 }
 
-                function createScrambledAnimation(item) {
-                  const text = item.textContent;
-                  const randomText = Array(text.length)
-                  .fill()
-                  .map(() => String.fromCharCode(
-                    Math.floor(Math.random() * (90 - 65) + 65)))
-                  .join("")
-                  .toLowerCase();
-
-                  return gsap.fromTo(
-                    item.children[0],
-                    {
-                      scrambleText: randomText,
-                    },
-                    {
-                      ...baseAnimation(item),
-                      scrambleText: text,
-                      chars: text,
-                    }
-                  );
-                }
-
                 function createAlphaAnimation(item) {
 
                   const params = getParams(item); // 1. get params from attributes
@@ -2073,39 +2069,53 @@
                   );
                 }
 
-                /** Main Text Effect Wrapper */
-                addEventListener("GSAPReady", (event) => {
-                  const texts = [...document.querySelectorAll(
-                    '[data-animate="text"]')];
-
+                /* --------------------------------------------------------------------
+                   3. Init – GSAPReady
+                -------------------------------------------------------------------- */
+                addEventListener("GSAPReady", () => {
+                  const texts = [...document.querySelectorAll('[data-animate="text"]')];
                   texts.forEach((item) => {
-                    if (item.dataset.type === "chars") {
-                      createSplitRevealAnimation(
-                        item);
-                    } else if (item.dataset.type
-                      === "words") {
-                      createSplitRevealAnimation(item);
-                    } else if (item.dataset.type === "alpha") {
-                      createAlphaAnimation(
-                        item);
-                    } else if (item.dataset.type === "side") {
-                      createSideAnimation(
-                        item);
-                    } else if (item.dataset.type === "updown") {
-                      createUpDownAnimation(
-                        item);
+                    switch (item.dataset.type) {
+                      case "words":
+                      case "chars":
+                        createSplitRevealAnimation(item);
+                        break;
+                      case "alpha":
+                        createAlphaAnimation(item);
+                        break;
+                      case "side":
+                        createSideAnimation(item);
+                        break;
+                      case "updown":
+                        createUpDownAnimation(item);
+                        break;
+                      default:
+                        createSplitRevealAnimation(item);
                     }
                   });
                 });
-
               }
+
+            </script>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll(".text-example-container").forEach(box => {
+                  const link = box.dataset.youtube;
+                  if (!link) return;
+
+                  // 안쪽 hitarea에 클릭 이벤트
+                  box.querySelector(".yt-hitarea").addEventListener("click", () => {
+                    window.open(link, "_blank", "noopener");
+                  });
+                });
+              });
             </script>
           </div>
         </section>
         <section id="marquee" data-animate="marquee" class="sec">
           <div class="comp scroller">
             <div data-marquee="line" class="scroller-line first">
-              <div class="scroller-text">SCROLLTRIGGER</div>
+              <div class="scroller-text">mongledum</div>
               <div class="marquee-img">
                 <div class="dual-img">
                   <img
@@ -2116,10 +2126,10 @@
                     loading="eager" alt="" class="dual-img-shadow"/>
                 </div>
               </div>
-              <div class="scroller-text">MARQUEE</div>
+              <div class="scroller-text">mongledum</div>
             </div>
             <div data-marquee="line" class="scroller-line second">
-              <div class="scroller-text">MARQUEE</div>
+              <div class="scroller-text">mongledum</div>
               <div class="marquee-img">
                 <div class="dual-img">
                   <img
@@ -2130,7 +2140,7 @@
                     loading="eager" alt="" class="dual-img-shadow"/>
                 </div>
               </div>
-              <div class="scroller-text">SCROLLTRIGGER</div>
+              <div class="scroller-text">mongledum</div>
             </div>
           </div>
           <div class="code-block w-embed w-script">

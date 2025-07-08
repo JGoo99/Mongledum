@@ -2466,18 +2466,49 @@ body {
   padding-top: .5rem;
   padding-left: .5rem;
   padding-right: .5rem;
-  display: flex
+  display: flex;
+  transition: transform .3s cubic-bezier(.25, .8, .25, 1),
+  box-shadow .3s ease;
+  will-change: transform, box-shadow;
 }
 
 .text-example-container {
+  background-size: cover;
+  background-position: center;
+  position: relative;
   aspect-ratio: 334/195;
   border-radius: var(--rounded-1);
-  background-color: var(--primary);
-  color: var(--white);
   justify-content: center;
   align-items: center;
   width: 100%;
-  display: flex
+  display: flex;
+}
+
+.text-g-item:hover {
+  transform: translateY(-6px); /* 살짝 위로 */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .15), /* 부드러운 큰 그림자 */ 0 6px 12px rgba(0, 0, 0, .10); /* 보조 그림자 */
+}
+
+/* 투명 클릭 레이어 */
+.text-example-container .yt-hitarea {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+/* 재생 아이콘 */
+.text-example-container .yt-play {
+  width: 60px;
+  height: 42px;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  pointer-events: none; /* 아이콘 위 클릭도 hitarea 로 전달 */
+  transition: transform .3s;
+}
+
+.text-example-container:hover .yt-play {
+  transform: scale(1.12);
 }
 
 .text-example-tx-w {
@@ -2492,7 +2523,8 @@ body {
   font-family: Impact, Haettenschweiler, Franklin Gothic Bold, Charcoal, sans-serif;
   font-size: 2rem;
   font-weight: 600;
-  line-height: .9em
+  line-height: .9em;
+  color: var(--secondary);
 }
 
 .text-effect-w {
