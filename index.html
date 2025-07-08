@@ -38,6 +38,7 @@
   </script>
   <style>
     [data-start="hidden"] {
+      opacity: 0;
       visibility: hidden;
     }
   </style>
@@ -52,7 +53,7 @@
   <p>이 팀, 개꿀이다.</p>
   <p>얘들아, 딴짓하자. 몽글덤으로.</p>
 </div>
-<div id="main-content" style="opacity: 0;">
+<div id="main-content" data-start="hidden">
   <div class="w-embed">
     <style>
       ::selection {
@@ -338,7 +339,7 @@
       </div>
     </div>
   </nav>
-  <div id="smooth-wrapper" data-start="hidden" class="scroll-wrapper">
+  <div id="smooth-wrapper" class="scroll-wrapper">
     <main id="smooth-content" class="main">
       <header id="hero" data-module="hero" class="sec hero">
         <div class="comp">
@@ -482,366 +483,241 @@
         </div>
         <div class="code-block w-embed w-script">
           <script>
-            {
+            function setupHeroAnimations() {
               const split = (text, type = "chars") => {
-                  // Handle both single elements and arrays of elements
-                  const elements = Array.isArray(text) ? text : [text];
-
-                  // Set aria labels
-                  elements.forEach((element) => {
-                      if (element && typeof element.setAttribute === "function") {
-                        element.setAttribute("aria-label", element.textContent);
-                      }
-                    }
-                  );
-
-                  // Split text and set aria-hidden
-                  const splits = new SplitText(text, {
-                    type
-                  });
-                  splits[type].forEach((char) => {
-                      if (char && typeof char.setAttribute === "function") {
-                        char.setAttribute("aria-hidden", "true");
-                      }
-                    }
-                  );
-
-                  return splits[type];
-                }
-              ;
+                const elements = Array.isArray(text) ? text : [text];
+                elements.forEach((el) => el?.setAttribute?.("aria-label", el.textContent));
+                const splits = new SplitText(text, { type });
+                splits[type].forEach((char) => char?.setAttribute?.("aria-hidden", "true"));
+                return splits[type];
+              };
 
               /** -- Setup and Utils */
 
               let mongleSplit, dumSplit, parSplit, layerItems, isIn = false;
 
               const animateIn = async (delay = 0, scribble) => {
-                  isIn = true;
-                  animateStripesOut();
+                isIn = true;
+                animateStripesOut();
 
-                  gsap.to(parSplit, {
-                    autoAlpha: 1,
-                    yPercent: 0,
-                    duration: 0.4,
-                    delay: delay,
-                    ease: "expo.out",
-                    stagger: {
-                      each: 0.08,
-                    },
-                  });
+                gsap.to(parSplit, {
+                  autoAlpha: 1,
+                  yPercent: 0,
+                  duration: 0.4,
+                  delay,
+                  ease: "expo.out",
+                  stagger: 0.08,
+                });
 
-                  await gsap.to(mongleSplit, {
-                    yPercent: 0,
-                    duration: 0.5,
-                    delay: delay,
-                    ease: "expo.out",
-                    stagger: {
-                      each: 0.01,
-                      from: "end",
-                    },
-                  });
+                await gsap.to(mongleSplit, {
+                  yPercent: 0,
+                  duration: 0.5,
+                  delay,
+                  ease: "expo.out",
+                  stagger: { each: 0.01, from: "end" },
+                });
 
-                  await gsap.to(dumSplit, {
-                    yPercent: 0,
-                    duration: 0.5,
-                    delay: 0.4,
-                    ease: "expo.out",
-                    stagger: {
-                      each: 0.01,
-                      from: "end",
-                    },
-                  });
+                await gsap.to(dumSplit, {
+                  yPercent: 0,
+                  duration: 0.5,
+                  delay: 0.4,
+                  ease: "expo.out",
+                  stagger: { each: 0.01, from: "end" },
+                });
 
-                  if (scribble) {
-                    await animateScribble(scribble);
-                  }
-                }
-              ;
+                if (scribble) await animateScribble(scribble);
+              };
 
               const animateOut = async () => {
-                  isIn = false;
-                  animateStripesIn();
+                isIn = false;
+                animateStripesIn();
 
-                  gsap.to(parSplit, {
-                    autoAlpha: 0,
-                    yPercent: 100,
-                    duration: 0.8,
-                    ease: "expo.out",
-                    stagger: {
-                      each: 0.08,
-                    },
-                  });
+                gsap.to(parSplit, {
+                  autoAlpha: 0,
+                  yPercent: 100,
+                  duration: 0.8,
+                  ease: "expo.out",
+                  stagger: 0.08,
+                });
 
-                  gsap.to(mongleSplit, {
-                    yPercent: 110,
-                    duration: 0.8,
-                    ease: "expo.out",
-                    delay: 0.1,
-                    stagger: {
-                      each: 0.01,
-                      from: "center",
-                    },
-                  });
+                gsap.to(mongleSplit, {
+                  yPercent: 110,
+                  duration: 0.8,
+                  ease: "expo.out",
+                  delay: 0.1,
+                  stagger: { each: 0.01, from: "center" },
+                });
 
-                  gsap.to(dumSplit, {
-                    yPercent: -110,
-                    duration: 0.8,
-                    ease: "expo.out",
-                    delay: 0.1,
-                    stagger: {
-                      each: 0.01,
-                      from: "center",
-                    },
-                  });
-                }
-              ;
+                gsap.to(dumSplit, {
+                  yPercent: -110,
+                  duration: 0.8,
+                  ease: "expo.out",
+                  delay: 0.1,
+                  stagger: { each: 0.01, from: "center" },
+                });
+              };
 
-              /** -- Scribble Animaiton */
               let isScribbling = false;
               const SCRIBBLE_CONFIG = {
                 ROTATION_RANGE: 20,
-                TIME_BETWEEN_SCRIBBLES: 0.015,
-                VISIBILITY_DURATION: 0.01,
+                TIME_BETWEEN_SCRIBBLES: 0.03,
+                VISIBILITY_DURATION: 0.02,
                 REVERSE_ORDER: true,
               };
 
               const animateScribble = (scribble) => {
-                  if (isScribbling) {
-                    return;
-                  }
-                  isScribbling = true;
+                if (isScribbling) return;
+                isScribbling = true;
 
-                  gsap.set(scribble, {
-                    autoAlpha: 0,
-                    rotation: 0
-                  });
+                gsap.set(scribble, { autoAlpha: 0, rotation: 0 });
+                const tl = gsap.timeline();
+                const items = [...scribble].reverse();
 
-                  const tl = gsap.timeline();
+                items.forEach((item, index) => {
+                  const rotation = Math.random() * SCRIBBLE_CONFIG.ROTATION_RANGE - SCRIBBLE_CONFIG.ROTATION_RANGE / 2;
+                  const delay = index * SCRIBBLE_CONFIG.TIME_BETWEEN_SCRIBBLES;
 
-                  const scribblesToAnimate = [...scribble].reverse();
+                  tl.set(item, { autoAlpha: 1, rotation }, delay)
+                  .set(item, { autoAlpha: 0 }, delay + SCRIBBLE_CONFIG.VISIBILITY_DURATION);
+                });
 
-                  scribblesToAnimate.forEach((item, index) => {
-                      const randomRotation = Math.random()
-                        * SCRIBBLE_CONFIG.ROTATION_RANGE
-                        - SCRIBBLE_CONFIG.ROTATION_RANGE / 2;
-                      const baseDelay = index * SCRIBBLE_CONFIG.TIME_BETWEEN_SCRIBBLES;
+                tl.call(() => { isScribbling = false; });
+              };
 
-                      tl.add(gsap.set(item, {
-                        autoAlpha: 1,
-                        rotation: randomRotation,
-                        delay: baseDelay,
-                      }));
-
-                      tl.add(gsap.set(item, {
-                        autoAlpha: 0,
-                        delay: baseDelay + SCRIBBLE_CONFIG.VISIBILITY_DURATION,
-                      }));
-                    }
-                  );
-
-                  tl.call(() => {
-                      isScribbling = false;
-                    }
-                  );
-                }
-              ;
-
-              // hero stripes animation
               let heroStripes, stripes, stripesAnimation = null;
 
-              const calcX = (i) => {
-                  return i % 2 === 0 ? -heroStripes[i].scrollWidth
-                    : heroStripes[i].scrollWidth;
-                }
-              ;
+              const calcX = (i) => (i % 2 === 0 ? -heroStripes[i].scrollWidth : heroStripes[i].scrollWidth);
 
               const animateStripesIn = () => {
-                  if (stripesAnimation) {
-                    stripesAnimation.kill();
-                  }
+                stripesAnimation?.kill();
 
-                  // play video on the hero
-                  document.querySelector("video").play()
+                document.querySelector("video")?.play();
 
-                  gsap.set(heroStripes, {
-                    autoAlpha: 1,
-                    x: (i) => calcX(i),
-                    yPercent: (i) => (heroStripes.length / 2 - i) * 80,
-                  });
+                gsap.set(heroStripes, {
+                  autoAlpha: 1,
+                  x: (i) => calcX(i),
+                  yPercent: (i) => (heroStripes.length / 2 - i) * 80,
+                });
 
-                  gsap.set(stripes, {
-                    rotation: (i) => Math.random() * 30,
-                    ease: "expo.out",
-                  });
+                gsap.set(stripes, {
+                  rotation: () => Math.random() * 30,
+                  ease: "expo.out",
+                });
 
-                  stripesAnimation = gsap.to(heroStripes, {
-                    x: 0,
-                    delay: 0.2,
-                    duration: (i) => Math.random() + 1.2,
-                    ease: "expo.out",
-                  });
-                }
-              ;
+                stripesAnimation = gsap.to(heroStripes, {
+                  x: 0,
+                  delay: 0.2,
+                  duration: () => Math.random() + 1.2,
+                  ease: "expo.out",
+                });
+              };
 
               const animateStripesOut = () => {
-                  if (stripesAnimation) {
-                    stripesAnimation.kill();
-                  }
+                stripesAnimation?.kill();
+                stripesAnimation = gsap.to(heroStripes, {
+                  x: (i) => calcX(i),
+                  duration: 0.8,
+                  ease: "expo.out",
+                });
+              };
 
-                  stripesAnimation = gsap.to(heroStripes, {
-                    x: (i) => calcX(i),
+              // ✅ 여기서부터 바로 실행됨
+              const wrapper = document.querySelector("[data-module='hero']");
+              if (!wrapper) return;
+
+              const layer = wrapper.querySelector("[data-hero='layer']");
+              layerItems = layer.children;
+              const title = wrapper.querySelector("[data-hero='title']");
+              const toggle = wrapper.querySelector("[data-hero='toggle']");
+              const alpha = document.querySelectorAll("[data-hero='alpha']");
+              const par = document.querySelectorAll("[data-hero='par']");
+              const scribble = [...document.querySelector("[data-hero='scribble']").children[0].children];
+
+              mongleSplit = split(title.children[0], "chars");
+              dumSplit = split(title.children[1], "chars");
+              parSplit = split(par, "lines");
+              stripes = [...layer.children];
+              heroStripes = stripes.map((item) => item.children[0]);
+
+              gsap.set(heroStripes, { autoAlpha: 0 });
+              gsap.to(layer, {
+                yPercent: 10,
+                scrollTrigger: {
+                  trigger: layer,
+                  start: "top top",
+                  end: "+=100%",
+                  scrub: true,
+                },
+              });
+
+              gsap.set(mongleSplit.flat(), { yPercent: 110 });
+              gsap.set(dumSplit.flat(), { yPercent: -110 });
+              gsap.set(layer, { autoAlpha: 1 });
+              gsap.set(toggle, { scale: 3, rotation: 360 });
+              gsap.set(parSplit, { autoAlpha: 0, yPercent: 100 });
+              gsap.set(alpha, { autoAlpha: 0, scale: 0.7 });
+              gsap.set(scribble, { autoAlpha: 0 });
+
+              gsap.to(toggle, {
+                scale: 1,
+                rotation: 0,
+                delay: 0,
+                duration: 1.2,
+                ease: "expo.inOut",
+              });
+
+              gsap.to(alpha, {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 0.8,
+                delay: 0.2,
+                ease: "expo.out",
+              });
+
+              buttons();
+              animateIn(0.4, scribble);
+
+              toggle.querySelector("input")?.addEventListener("change", (event) => {
+                event.target.checked ? animateOut() : animateIn(scribble);
+              });
+
+              toggle.onmouseenter = () => {
+                if (!isIn) return;
+                animateScribble(scribble);
+              };
+
+              function buttons() {
+                const buttons = [...document.querySelectorAll("[data-module='btn']")];
+
+                buttons.forEach((btn) => {
+                  const overflow = btn.children[0];
+                  const text = overflow.children[0];
+
+                  overflow.appendChild(text.cloneNode(true));
+                  const splitText1 = split(overflow.children[0], "chars");
+                  const splitText2 = split(overflow.children[1], "chars");
+
+                  const animation = {
+                    yPercent: "-=100",
                     duration: 0.8,
                     ease: "expo.out",
-                  });
-                }
-              ;
-
-              addEventListener("GSAPReady", (event) => {
-                  const wrapper = document.querySelector("[data-module='hero']");
-                  if (!wrapper) {
-                    return;
-                  }
-
-                  const layer = wrapper.querySelector("[data-hero='layer']");
-                  layerItems = layer.children;
-                  const title = wrapper.querySelector("[data-hero='title']");
-                  const toggle = wrapper.querySelector("[data-hero='toggle']");
-                  const alpha = document.querySelectorAll("[data-hero='alpha']");
-
-                  const par = document.querySelectorAll("[data-hero='par']");
-                  const scribble = [...document.querySelector(
-                    "[data-hero='scribble']").children[0].children,];
-
-                  mongleSplit = split(title.children[0], "chars");
-                  dumSplit = split(title.children[1], "chars");
-                  parSplit = split(par, "lines");
-                  stripes = [...layer.children];
-                  heroStripes = stripes.map((item) => item.children[0]);
-                  gsap.set(heroStripes, {
-                    autoAlpha: 0
-                  });
-                  gsap.to(layer, {
-                    yPercent: 10,
-                    scrollTrigger: {
-                      trigger: layer,
-                      start: "top top",
-                      end: "+=100%",
-                      scrub: true,
-                    },
-                  });
-
-                  //   initial state
-                  gsap.set(mongleSplit.flat(), {
-                    yPercent: 110
-                  });
-                  gsap.set(dumSplit.flat(), {
-                    yPercent: -110
-                  });
-                  gsap.set(layer, {
-                    autoAlpha: 1
-                  });
-                  gsap.set(toggle, {
-                    scale: 3,
-                    rotation: 360
-                  });
-                  gsap.set(parSplit, {
-                    autoAlpha: 0,
-                    yPercent: 100
-                  });
-                  gsap.set(alpha, {
-                    autoAlpha: 0,
-                    scale: 0.7
-                  });
-                  gsap.set(scribble, {
-                    autoAlpha: 0
-                  });
-
-                  gsap.to(toggle, {
-                    scale: 1,
-                    rotation: 0,
-                    delay: 0,
-                    duration: 1.2,
-                    ease: "expo.inOut",
-                  });
-
-                  gsap.to(alpha, {
-                    autoAlpha: 1,
-                    scale: 1,
-                    duration: 0.8,
-                    delay: 0.2,
-                    ease: "expo.out",
-                  });
-
-                  buttons();
-
-                  animateIn(0.4, scribble);
-
-                  toggle.querySelector("input").addEventListener("change", (event) => {
-                      if (event.target.checked) {
-                        animateOut();
-                      } else {
-                        animateIn(scribble);
-                      }
-                    }
-                  );
-
-                  toggle.onmouseenter = () => {
-                    if (!isIn) {
-                      return;
-                    }
-                    // console.log("mouseenter");
-                    animateScribble(scribble);
+                    stagger: 0.02,
                   };
-                }
-              );
 
-              const buttons = () => {
-                  const buttons = [...document.querySelectorAll(
-                    "[data-module='btn']")];
+                  btn.onmouseenter = () => {
+                    gsap.to(splitText1, { ...animation, yPercent: -100 });
+                    gsap.to(splitText2, { ...animation, yPercent: -100 });
+                  };
 
-                  buttons.forEach((btn) => {
-                      const overflow = btn.children[0];
-                      const text = overflow.children[0];
-
-                      overflow.appendChild(text.cloneNode(true));
-                      const splitText1 = split(overflow.children[0], "chars");
-                      const splitText2 = split(overflow.children[1], "chars");
-
-                      const animation = {
-                        yPercent: "-=100",
-                        duration: 0.8,
-                        ease: "expo.out",
-                        stagger: 0.02,
-                      };
-
-                      btn.onmouseenter = () => {
-                        gsap.to(splitText1, {
-                          ...animation,
-                          yPercent: -100
-                        });
-                        gsap.to(splitText2, {
-                          ...animation,
-                          yPercent: -100
-                        });
-                      }
-                      ;
-
-                      btn.onmouseleave = () => {
-                        gsap.to(splitText1, {
-                          ...animation,
-                          yPercent: 0
-                        });
-                        gsap.to(splitText2, {
-                          ...animation,
-                          yPercent: 0
-                        });
-                      }
-                      ;
-                    }
-                  );
-                }
-              ;
+                  btn.onmouseleave = () => {
+                    gsap.to(splitText1, { ...animation, yPercent: 0 });
+                    gsap.to(splitText2, { ...animation, yPercent: 0 });
+                  };
+                });
+              }
             }
           </script>
+
         </div>
       </header>
       <div id="content">
@@ -2287,7 +2163,7 @@
                   </a>
                 </div>
                 <div class="_w-ch">
-                  우리는 시인, 개발자, 이공계생, 창업가, 복지학도, 행정가로 구성돼 있다.<br/>
+                  우리는 시인, 개발자, 이공계생, 창업가, 복지학도, 행정가로 구성되어 있다.<br/>
                   각자의 전공도, 삶도 다르지만 매달 에세이를 쓰고, 그 문장을 음악으로 만든다.
                   이건 단순한 작사·작곡이 아니라 “문학적 음악”이라는 새로운 장르를 여는 작업이다.<br/>
                   이게 몽글덤의 정체성이자 무기다.
@@ -2420,103 +2296,121 @@
       </div>
     </main>
   </div>
-  <script src="./js/jquery.min.js" type="text/javascript"></script>
-  <script src="./js/webflow.js" type="text/javascript"></script>
-  <script src="./js/gsap.min.js" type="text/javascript"></script>
-  <script src="./js/splitText.min.js" type="text/javascript"></script>
-  <script src="./js/scrollTrigger.min.js" type="text/javascript"></script>
-  <script src="./js/scrollSmoother.min.js" type="text/javascript"></script>
-  <script src="./js/flip.min.js" type="text/javascript"></script>
-  <script src="./js/scrollToPlugin.min.js" type="text/javascript"></script>
-  <script src="./js/inertiaPlugin.min.js" type="text/javascript"></script>
-  <script src="./js/scrambleTextPlugin.min.js" type="text/javascript"></script>
-  <script src="./js/observer.min.js" type="text/javascript"></script>
-  <script src="./js/draggable.min.js" type="text/javascript"></script>
-  <script src="./js/motionPathPlugin.js" type="text/javascript"></script>
-  <script src="./js/motionPathHelper.min.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    gsap.registerPlugin(SplitText, ScrollTrigger, ScrollSmoother, Flip, Observer, Draggable,
-      MotionPathPlugin, MotionPathHelper);
-  </script>
-  <script src="./js/lenis.min.js"></script>
-  <script>
-    {
-      let lenis;
-
-      const initScroll = () => {
-          lenis = new Lenis({});
-          lenis.on("scroll", ScrollTrigger.update);
-          gsap.ticker.add((time) => lenis.raf(time * 1000));
-          gsap.ticker.lagSmoothing(0);
-        }
-      ;
-
-      function initGsapGlobal() {
-        initScroll();
-
-        const sendGsapEvent = () => {
-            window.dispatchEvent(new CustomEvent("GSAPReady", {
-              detail: {
-                lenis,
-              },
-            }));
-          }
-        ;
-
-        if (document.fonts.status === "loaded") {
-          sendGsapEvent();
-        } else {
-          document.fonts.ready.then(() => {
-              sendGsapEvent();
-            }
-          );
-        }
-
-        let resizeTimeout;
-        const onResize = () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                ScrollTrigger.refresh();
-              }
-              , 50);
-          }
-        ;
-
-        window.addEventListener("resize", () => onResize());
-        const resizeObserver = new ResizeObserver((entries) => onResize());
-        resizeObserver.observe(document.body);
-
-        queueMicrotask(() => {
-            gsap.to("[data-start='hidden']", {
-              autoAlpha: 1,
-              duration: 0.1,
-              delay: 0.2,
-            });
-          }
-        );
-      }
-
-      // this only for dev
-      const documentReady = document.readyState === "complete" || document.readyState
-        === "interactive";
-
-      if (documentReady) {
-        initGsapGlobal();
-      } else {
-        addEventListener("DOMContentLoaded", (event) => initGsapGlobal());
-      }
-    }
-  </script>
-    <script>
-      window.addEventListener("load", () => {
-        document.body.classList.remove("loading");
-        const preloader = document.getElementById("preloader");
-        if (preloader) preloader.style.display = "none";
-
-        const mainContent = document.getElementById("main-content");
-        if (mainContent) mainContent.style.opacity = 1;
-      });
-    </script>
 </div>
+<script src="./js/jquery.min.js" type="text/javascript"></script>
+<script src="./js/webflow.js" type="text/javascript"></script>
+<script src="./js/gsap.min.js" type="text/javascript"></script>
+<script src="./js/splitText.min.js" type="text/javascript"></script>
+<script src="./js/scrollTrigger.min.js" type="text/javascript"></script>
+<script src="./js/scrollSmoother.min.js" type="text/javascript"></script>
+<script src="./js/flip.min.js" type="text/javascript"></script>
+<script src="./js/scrollToPlugin.min.js" type="text/javascript"></script>
+<script src="./js/inertiaPlugin.min.js" type="text/javascript"></script>
+<script src="./js/scrambleTextPlugin.min.js" type="text/javascript"></script>
+<script src="./js/observer.min.js" type="text/javascript"></script>
+<script src="./js/draggable.min.js" type="text/javascript"></script>
+<script src="./js/motionPathPlugin.js" type="text/javascript"></script>
+<script src="./js/motionPathHelper.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  gsap.registerPlugin(SplitText, ScrollTrigger, ScrollSmoother, Flip, Observer, Draggable,
+    MotionPathPlugin, MotionPathHelper);
+</script>
+<script src="./js/lenis.min.js"></script>
+<script>
+  {
+    let lenis;
+
+    const initScroll = () => {
+      lenis = new Lenis({});
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    };
+
+    function initGsapGlobal() {
+      initScroll();
+
+      const sendGsapEvent = () => {
+        window.dispatchEvent(new CustomEvent("GSAPReady", {
+          detail: {
+            lenis,
+          },
+        }));
+      };
+
+      if (document.fonts.status === "loaded") {
+        sendGsapEvent();
+      } else {
+        document.fonts.ready.then(() => {
+          sendGsapEvent();
+        });
+      }
+
+      let resizeTimeout;
+      const onResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 50);
+      };
+
+      window.addEventListener("resize", () => onResize());
+      const resizeObserver = new ResizeObserver(() => onResize());
+      resizeObserver.observe(document.body);
+    }
+
+    const documentReady = document.readyState === "complete" || document.readyState === "interactive";
+
+    if (documentReady) {
+      initGsapGlobal();
+    } else {
+      addEventListener("DOMContentLoaded", () => initGsapGlobal());
+    }
+  }
+</script>
+<script>
+  let splashMinTimePassed = false;
+  let gsapReady = false;
+
+  function runPostSplashAnimations() {
+    gsap.set("[data-start='hidden']", { autoAlpha: 0 });
+    gsap.to("[data-start='hidden']", {
+      autoAlpha: 1,
+      duration: 0.3,
+      delay: 0.1,
+      ease: "none"
+    });
+
+    if (typeof setupHeroAnimations === "function") {
+      setupHeroAnimations();
+    }
+  }
+
+  function endSplashIfReady() {
+    if (splashMinTimePassed && gsapReady) {
+      const preloader = document.getElementById("preloader");
+      preloader.style.opacity = "0";
+
+      setTimeout(() => {
+        preloader.style.display = "none";
+        document.body.classList.remove("loading");
+
+        runPostSplashAnimations();
+      }, 500);
+    }
+  }
+
+  window.addEventListener("GSAPReady", () => {
+    gsapReady = true;
+    endSplashIfReady();
+  });
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      splashMinTimePassed = true;
+      endSplashIfReady();
+    }, 1500);
+  });
+</script>
 </body>
 </html>
