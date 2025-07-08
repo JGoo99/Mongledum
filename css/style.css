@@ -3110,10 +3110,6 @@ body {
   font-family: 'Ownglyph_ParkDaHyun', sans-serif;
   color: var(--secondary);
   -webkit-text-stroke: 1px var(--primary);
-  text-shadow: 1px 1px 0 #333,
-  -1px 1px 0 #333,
-  1px -1px 0 #333,
-  -1px -1px 0 #333;
 }
 
 ._w-ch {
